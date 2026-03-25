@@ -66,7 +66,6 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* 土黃色標題加大 */
         .title-small { 
             color: var(--muted-brown); 
             font-size: 1.5rem; 
@@ -74,7 +73,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* 首頁故事 Cover */
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
@@ -96,7 +94,6 @@
             backdrop-filter: blur(5px);
         }
 
-        /* 動態內黃色文字放大 */
         .dynamic-value-large {
             color: var(--gold-bright);
             font-weight: 900;
@@ -104,14 +101,12 @@
             line-height: 1;
         }
 
-        /* 必須 區塊文字色彩與加大 */
         .must-list-item { font-size: 1.35rem; font-weight: 700; line-height: 1.6; }
         .color-do { color: var(--do-blue); }
         .color-buy { color: var(--buy-gold); }
         .color-visit { color: var(--visit-green); }
         .color-see { color: var(--see-clay); }
 
-        /* 行程標籤按鈕 */
         .day-tab {
             padding: 0.8rem 2.5rem;
             font-weight: 900;
@@ -131,11 +126,20 @@
 
         /* 住宿飯店文字縮小設定 */
         .hotel-text-small {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--deep-gray);
             line-height: 1.6;
             opacity: 0.9;
+        }
+        .facility-tag {
+            font-size: 0.85rem;
+            background: rgba(196, 164, 132, 0.15);
+            color: var(--deep-gray);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+            font-weight: 900;
         }
 
         /* 參考 標題加大 */
@@ -155,6 +159,13 @@
         .total-box-usd { background-color: #2563eb; color: white; }
         .total-box-vnd { background-color: #10b981; color: white; }
 
+        .map-link {
+            color: var(--wine-red);
+            font-weight: 700;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
         .activity-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -165,11 +176,23 @@
         .activity-card h4 { font-size: 1.6rem; margin-bottom: 0.5rem; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* 餐食分行樣式 */
+        .meal-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .meal-label {
+            min-width: 3.5rem;
+            font-weight: 900;
+            color: var(--wine-red);
+        }
     </style>
 </head>
 <body class="pt-16">
 
-    <!-- 置頂標籤導覽列 -->
+    <!-- 標籤導覽列 -->
     <nav class="fixed-nav">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
             <div class="text-xl font-black serif text-muted-brown tracking-widest hidden lg:block uppercase">Exploration Diary</div>
@@ -188,7 +211,7 @@
     <section id="story">
         <header class="hero-section">
             <div class="px-6">
-                <div class="story-container animate-in fade-in duration-1000 shadow-2xl">
+                <div class="story-container animate-in fade-in duration-1000 shadow-2xl text-center md:text-left mx-auto">
                     <p class="text-xs tracking-[0.6em] mb-4 uppercase text-muted-brown font-black italic">Cultural Heritage Narrative</p>
                     <h1 class="text-4xl md:text-7xl font-black mb-10 serif leading-tight text-white">會安，靜止的黃金時光</h1>
                     <p class="text-base md:text-xl font-light leading-loose opacity-95 max-w-4xl mx-auto text-justify">
@@ -208,7 +231,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="p-8 bg-white border border-gray-200 shadow-sm text-center md:text-left">
-                <p class="title-small uppercase mb-6 tracking-widest italic border-b pb-2">Flight 航班 (長榮航)</p>
+                <p class="title-small uppercase mb-6 tracking-widest italic border-b pb-2">Flight 航班</p>
                 <div class="space-y-4">
                     <p class="text-base font-black text-deep-gray">BR383 | <span class="text-wine-red text-2xl">09:45 - 11:35</span></p>
                     <p class="text-base font-black text-deep-gray">BR384 | <span class="text-wine-red text-2xl">12:55 - 16:45</span></p>
@@ -240,7 +263,7 @@
     <!-- 3. 詳細行程 -->
     <section id="itinerary" class="py-24 px-6 bg-white border-y border-gray-100 text-center">
         <h2 class="text-6xl font-black serif uppercase mb-4 tracking-tighter text-deep-gray">文化探索地圖</h2>
-        <p class="title-small italic uppercase mb-12 text-center">Comprehensive Journey in Central Vietnam (04/03 - 04/07)</p>
+        <p class="title-small italic uppercase mb-12 text-center">Narrative family journey across Vietnam</p>
         <div class="flex justify-center flex-wrap gap-1 mb-16" id="daySelector"></div>
         <div id="dayContent" class="max-w-6xl mx-auto bg-[#fdfdfd] border border-gray-100 p-8 md:p-24 min-h-[750px] shadow-sm text-left animate-in fade-in duration-500">
             <!-- JS 內容注入 -->
@@ -300,7 +323,7 @@
                     </div>
                     <div>
                         <span class="memo-title-large">💵 小費參考</span>
-                        <p class="text-deep-gray font-medium text-lg">領隊導遊建議 NT$ 300 / 人 / 天。飯店床頭約 20,000 ₫。按摩建議小費 50k - 110k ₫。</p>
+                        <p class="text-deep-gray font-medium text-lg">領隊導遊建議 NT$ 300 / 人 / 天。飯店床頭約 20,000 ₫。按摩建議小費 50k - 110k ₫，展現對專業服務的尊重。</p>
                     </div>
                     <div>
                         <span class="memo-title-large text-wine-red">🚩 責任旅人</span>
@@ -320,7 +343,7 @@
                             <h4 class="font-black text-deep-gray">夜遊峴港韓江</h4>
                             <span class="text-wine-red font-black text-2xl">NT$ 800</span>
                         </div>
-                        <p class="text-lg text-text-muted italic">搭船夜遊韓江＋飲料乙杯。欣賞十座地標大橋燈火。如天候不佳或煙火節無法參加。危險等級：B</p>
+                        <p class="text-lg text-text-muted italic">搭船夜遊韓江＋飲料乙杯。欣賞地標大橋燈火。如天候不佳或煙火節期間無法參加。危險等級：B</p>
                     </div>
                     <div class="activity-card shadow-sm hover:shadow-lg transition">
                         <div class="flex justify-between items-start mb-2">
@@ -334,14 +357,14 @@
                             <h4 class="font-black text-deep-gray">峴港越式洗頭 (90分鐘)</h4>
                             <span class="text-wine-red font-black text-2xl">NT$ 1,000</span>
                         </div>
-                        <p class="text-lg text-text-muted italic">含洗髮、按摩、護膚。感受道地美容文化。10位成行，含小費。危險等級：C</p>
+                        <p class="text-lg text-text-muted italic">包含洗髮、臉部按摩、肩頸放鬆。道地美容文化體驗。10位成行，報價含小費。危險等級：C</p>
                     </div>
                     <div class="activity-card shadow-sm hover:shadow-lg transition" style="border-left-color: var(--wine-red)">
                         <div class="flex justify-between items-start mb-2">
                             <h4 class="font-black text-deep-gray">會安回憶歌舞秀</h4>
                             <span class="text-wine-red font-black text-2xl">NT$ 1,300</span>
                         </div>
-                        <p class="text-lg text-text-muted italic">越南最大實景歌舞秀。穿越16世紀絲路商港。10人出團。危險等級：C</p>
+                        <p class="text-lg text-text-muted italic">越南最大實景歌舞秀。穿越16世紀體驗絲路商港盛況。10人出團。危險等級：C</p>
                     </div>
                 </div>
             </div>
@@ -355,7 +378,7 @@
             <p class="title-small font-bold mt-4 uppercase tracking-[0.3em] text-xs text-center mb-16">Tracking the Family Footprints</p>
 
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-16">
-                <input type="text" id="exp-item" placeholder="項目內容" class="p-4 bg-gray-50 border-b-2 border-deep-gray text-deep-gray font-bold outline-none focus:border-wine-red transition-all">
+                <input type="text" id="exp-item" placeholder="項目內容" class="p-4 bg-gray-50 border-b-2 border-deep-gray text-deep-gray font-bold outline-none focus:border-wine-red">
                 <input type="number" id="exp-amount" placeholder="金額" class="p-4 bg-gray-50 border-b-2 border-deep-gray text-deep-gray font-mono outline-none focus:border-wine-red">
                 <select id="exp-currency" class="p-4 bg-white border border-gray-300 font-black text-deep-gray">
                     <option value="VND">越幣 (VND)</option>
@@ -439,53 +462,84 @@
                 title: "踏上湛藍海岸：峴港初航",
                 story: "當機輪輕觸峴港跑道，南中國海的微風正式宣告旅程開始。這座被稱為『東方夏威夷』的城市，以山海交織的美景迎接世界。第一晚，我們在港都夜色中品味日式精緻與越式熱情的融合。",
                 spots: [
-                    { name: "山茶半島與靈應寺 (Son Tra Peninsula)", desc: "矗立於峴港東北部的山茶半島海拔達 693 米，是守護這座港城的天然屏障。靈應寺內供奉著高達 67 米、由白玉大理石精雕而成的觀音像。傳說此地為『佛灘』，自古守護著往來船隻。從寺內平台鳥瞰，整座峴港灣的弧形海岸線與現代摩天大樓盡收眼底，波光粼粼的湛藍海水與青翠山色交織，展現壯麗非凡的氣勢。", map: "https://www.google.com/maps/search/?api=1&query=Linh+Ung+Pagoda" },
-                    { name: "美溪沙灘 (My Khe Beach)", desc: "被富比士雜誌評選為『世界最美六大沙灘之一』。長達 900 公尺的海岸線擁有細軟如粉的白沙，海水湛藍且溫暖。傍晚時分，沙灘在夕陽餘暉下呈現迷人的金黃色，踏在細柔的沙灘上，耳邊傳來陣陣溫柔海濤聲，是開啟度假心境的最佳場所。", map: "https://www.google.com/maps/search/?api=1&query=My+Khe+Beach" }
+                    { name: "桃園國際機場 ➔ 峴港機場 (BR383)", desc: "搭乘長榮航空由台北直飛。抵達後由專業導遊迎接，開啟五天感官之旅。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" },
+                    { name: "山茶半島與靈應寺 (Son Tra Peninsula)", desc: "矗立於峴港東北部的守護屏障。靈應寺內供奉著高達 67 米、由白玉大理石精雕而成的觀音像。從寺內平台鳥瞰，整座峴港灣的弧形海岸線與現代摩天大樓盡收眼底，波光粼粼的湛藍海水與青翠山色交織，展現壯麗氣勢。", map: "https://www.google.com/maps/search/?api=1&query=Linh+Ung+Pagoda" },
+                    { name: "美溪沙灘 (My Khe Beach)", desc: "被富比士評選為『世界最美六大沙灘之一』。長達 900 公尺的海岸線擁有細軟如粉的白沙。傍晚時分，沙灘在夕陽餘暉下呈現金黃色。踏在細柔的沙灘上，開啟度假心境。", map: "https://www.google.com/maps/search/?api=1&query=My+Khe+Beach" }
                 ],
-                hotel: "峴港 Eden Ocean View / Paracel Danang / Canvas Danang / G8 Luxury / Paris Deli / Cicilia / Royal Lotus / Grandvrio City / Aria Grand 或同級",
-                meal: "早：機上輕食 / 午：特色越南地道美食(河粉+法國麵包+咖啡) USD 9 / 晚：日式江戶壽司船套餐或中越式合菜(含酒水) USD 10"
+                hotel: "EDEN OCEAN VIEW DA NANG",
+                hotelMap: "https://www.google.com/maps/search/?api=1&query=Eden+Ocean+View+Danang",
+                facilities: "✅游泳池 ✅健身房 ✅SPA",
+                meal: {
+                    breakfast: "機上餐食",
+                    lunch: "特色越南地道美食(河粉+法國麵包+咖啡) USD 9",
+                    dinner: "日式江戶壽司船套餐或中越式合菜(含酒水) USD 10"
+                }
             },
             2: {
                 title: "黃牆歲月：會安古鎮脈動",
-                story: "穿越椰林水道，體驗圓籃船旋轉的活力。隨後走進時間靜止的會安古鎮，感受到大航海時代留下的印記。當夜幕低垂，萬盞燈籠點亮了秋盆河，那是靈魂最安靜的時刻。",
+                story: "穿越椰林水道，體驗圓籃船旋轉的活力。隨後走進時間靜止的會安古鎮，感受大航海時代留下的印記。當夜幕低垂，萬盞燈籠點亮了秋盆河，那是靈魂最安靜的時刻。",
                 spots: [
-                    { name: "迦南島生態體驗：越南竹桶船 (Basket Boat)", desc: "前往秋盆河下游的迦南島，體驗富有越南中部特色的圓形籃子船。穿梭在茂密的水椰林水道中，不僅能觀賞船夫展現高超的『水上瘋狂特技旋轉』，還能參與有趣的親手釣小螃蟹體驗。這種傳承自古老漁民智慧的純樸體驗，是感受越南中部漁村文化最直接的方式。", map: "https://www.google.com/maps/search/?api=1&query=Cam+Thanh+Coconut+Village" },
-                    { name: "會安古鎮文化巡禮 (UNESCO World Heritage)", desc: "會安是世界文化遺產，曾是 16 世紀最重要的海上貿易門戶。漫步老街，隨處可見中、日、法、越多元美學交融的建築。重點景點包含象徵民族和諧的木造「日本橋（來遠橋）」、裝飾華美的「福建會館」與「廣肇會館」、散發濃厚古韻的陳富街，以及具有數百年歷史、保留完整木雕藝術的「德安古宅」或「進記古宅」。", map: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town" }
+                    { name: "迦南島 Cam Kim Island 生態體驗", desc: "前往秋盆河下游的迦南島。搭乘由竹子編織而成的圓型竹籃船（竹桶船）穿梭在水椰林水道中。不僅能領略幽靜美景，還能觀賞船夫展現高超的『水上瘋狂特技旋轉』與有趣的『樂釣螃蟹趣』。", map: "https://www.google.com/maps/search/?api=1&query=Cam+Thanh+Coconut+Village" },
+                    { name: "會安古鎮文化巡禮 (Walking Tour)", desc: "聯合國教科文組織認證的世界文化遺產。巡禮包含：融合中日風格的「日本橋」、雕樑畫棟的「福建會館」與「廣肇會館」、散發古韻的陳富街，以及具有數百年歷史、保留完整木雕藝術的「德安古宅」或「進記古宅」。", map: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town" }
                 ],
-                hotel: "會安 Emm Hotel Hoi An / Ally Beach Boutique / Aurora Riverside / Muong Thanh Holiday / Hoi An Rosemary / Hoi An Blue Sky 或同級",
-                meal: "早：飯店內自助早餐 / 午：迦南特色風味餐(含酒水) USD 15 / 晚：OTTA會安在地小吃吃到飽 USD 12"
+                hotel: "HOI AN ROSEMARY BOUTIQUE HOTEL & SPA",
+                hotelMap: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Rosemary+Boutique+Hotel+Spa",
+                facilities: "✅游泳池 ✅健身房 ✅SPA",
+                meal: {
+                    breakfast: "飯店內自助式早餐",
+                    lunch: "迦南海鮮風味餐(含酒水) USD 15",
+                    dinner: "OTTA會安在地小吃吃到飽 USD 12"
+                }
             },
             3: {
                 title: "粉紅夢幻：城市浪漫註腳",
-                story: "從古老的大理石山到現代美學的 APEC 公園，峴港是一座新舊交融的奇蹟之城。我們在巨龍橋畔看見城市的活力，並在粉紅光影中捕捉法式優雅。",
+                story: "從古老的大理石山到現代美學的 APEC 公園，峴港是一座新舊交融的奇蹟之城。我們在巨龍橋畔看見文明的壯麗，並在粉色光影中捕捉城市最柔美的一面。",
                 spots: [
-                    { name: "五行山：水山登高 (上下山電梯)", desc: "由金、木、水、火、土五座大理石山峰組成。我們搭乘景觀電梯直達最宏偉的「水山」。山中藏有無數神祕的天然石灰岩洞穴與佛龕，當陽光從洞頂石縫灑下，莊嚴而神聖。登上頂端望江台，可以遠眺大海、漢江景致與其餘四座奇石山峰，感受自然界與信仰力量的交織。", map: "https://www.google.com/maps/search/?api=1&query=Marble+Mountains" },
-                    { name: "APEC 雕塑公園 (APEC Sculpture Park)", desc: "位於韓江畔，核心建築造型如同巨大白色飛箏展翅高飛。這座公園是為了紀念 2017 年越南主辦的 APEC 會議而建，採用現代幾何鋼架結構，象徵著越南經濟的起飛與國際化。公園佔地約 8665 平方公尺，白天純淨亮麗，夜晚在多彩燈光投射下則顯得動感十足，是峴港最具代表性的現代美學地標。", map: "https://www.google.com/maps/search/?api=1&query=APEC+Sculpture+Park+Da+Nang" },
-                    { name: "粉紅大教堂 (不入內) & 龍橋龍首魚身", desc: "【粉紅大教堂】建於1923年法屬時期，以糖果般的粉嫩外牆聞名，是法式浪漫的象徵。隨後前往【龍橋】，這是峴港的精神指標，橋頭附近矗立著著名的「龍首魚身」噴水石雕，週末夜晚更有震撼的噴火與噴水表演。在這裡散步，感受港都最真切的生活頻率。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Cathedral" }
+                    { name: "會安 ➔ 五行山 (水山登高 + 上下山電梯)", desc: "由金木水火土五座大理石山峰組成。我們搭乘景觀電梯登上最宏偉的「水山」。探索天然溶洞（如藏龍洞）、莊嚴佛龕與百年寺廟。登頂望江台可遠眺大海與其餘四座奇石山峰。", map: "https://www.google.com/maps/search/?api=1&query=Marble+Mountains" },
+                    { name: "粉紅大教堂 (外部參觀) + APEC 公園", desc: "【粉紅大教堂】建於1923年法屬時期，以糖果般的粉嫩外牆與屋頂公雞風標聞名。【APEC 雕塑公園】核心建築造型如巨大的白色『飛箏』展翅高飛，象徵著越南經濟的騰飛與現代美學的融合。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Cathedral" },
+                    { name: "龍橋 (Dragon Bridge) & 龍首魚身雕像", desc: "橫跨韓江的龍橋是峴港最具代表性的精神地標，象徵國家崛起。橋頭矗立著噴水的『龍首魚身』石雕，寓意平安繁榮。週末夜晚更有震撼的噴火與噴水表演。", map: "https://www.google.com/maps/search/?api=1&query=Dragon+Bridge" }
                 ],
-                hotel: "峴港 Eden Ocean View / Paracel Danang / Canvas Danang / G8 Luxury / Paris Deli / Cicilia / Royal Lotus / Grandvrio City / Aria Grand 或同級",
-                meal: "早：飯店內自助早餐 / 午：在地海鮮風味餐或歐式餐(含酒水) USD 10 / 晚：韓式燒肉BBQ 或 Pizza 4P's 義式餐(含酒水) USD 15"
+                hotel: "EDEN OCEAN VIEW DA NANG",
+                hotelMap: "https://www.google.com/maps/search/?api=1&query=Eden+Ocean+View+Danang",
+                facilities: "✅游泳池 ✅健身房 ✅SPA",
+                meal: {
+                    breakfast: "飯店內自助式早餐",
+                    lunch: "樂樂海鮮餐廳或歐樂餐廳(含酒水) USD 10",
+                    dinner: "韓式燒肉BBQ 或 Pizza 4P's義式餐廳 USD 15"
+                }
             },
             4: {
                 title: "雲端仙境：佛手之巔漫遊",
                 story: "搭乘全球最長的單軌纜車直抵雲霄，走在巨手托起的金橋之上。巴拿山的歐風城堡讓人彷彿置身十九世紀法國，享受一整天驚喜交織的異國派對。",
                 spots: [
-                    { name: "巴拿山纜車 ➔ 佛手黃金橋 (Golden Bridge)", desc: "搭乘跨越三項世界紀錄的單軌纜車登上海拔1487米的高山。纜車全程約20分鐘，穿過群山雲霧，景象氣勢萬千。最受矚目的『黃金橋』，由兩隻巨型佛手托起金色絲帶步道，長約 150 公尺，彷彿大地之母將這條金色小徑捧入雲端。站在橋上，伸手彷彿可觸及雲彩，視覺震撼舉世無雙，是能俯瞰山巒與雲海交匯的神聖觀景台。", map: "https://www.google.com/maps/search/?api=1&query=Golden+Bridge+Ba+Na+Hills" },
-                    { name: "Ba Na Hills 法國山城 (French Village)", desc: "重現 19 世紀法國殖民風格。鵝卵石街道、尖塔古堡、歌德式教堂與充滿歐風氛圍的花園，讓人彷彿穿越來到巴黎近郊。在溫潤的高山氣候下漫步，隨處皆是絕美的攝影取景點。在古堡、鐘塔與彩色噴泉間，享受慵懶且充滿藝術感的高山法式午後時光。註：不含蠟像館門票。", map: "https://www.google.com/maps/search/?api=1&query=French+Village+Ba+Na+Hills" },
-                    { name: "Fantasy Park 奇幻室內樂園", desc: "越南規模最大的室內樂園，設計靈感源自《地心歷險記》與《海底兩萬哩》。內部設有各類冒險、刺激設施，包含軌道滑車、恐龍樂園、4D電影院等。不論晴雨，都能在這座高山樂園中盡情暢玩，完全釋放身心壓力。", map: "https://www.google.com/maps/search/?api=1&query=Fantasy+Park" }
+                    { name: "巴拿山纜車 ➔ 佛手黃金橋 (Ba Na Hills)", desc: "搭乘跨越三項世界紀錄的單軌纜車登上海拔1487米的高山。漫步在由兩隻巨手托起的『巨石黃金橋』上。長約 150 公尺的步道如同金色絲帶，是舉世聞名的建築美學奇蹟。", map: "https://www.google.com/maps/search/?api=1&query=Golden+Bridge+Ba+Na+Hills" },
+                    { name: "Ba Na Hills 法國山城 (French Village)", desc: "重現 19 世紀法式殖民風格。鵝卵石街道、精緻尖塔古堡、歌德式教堂與花園，讓人彷彿來到巴黎近郊。註：不含蠟像館及百年酒窖門票。", map: "https://www.google.com/maps/search/?api=1&query=French+Village+Ba+Na+Hills" },
+                    { name: "Fantasy Park 奇幻樂園", desc: "越南最大的室內樂園。內部設有各類冒險設施，包含最受歡迎的戶外軌道滑車、恐龍樂園、4D電影院等。不論晴雨皆能在這座雲端樂園盡情暢玩。", map: "https://www.google.com/maps/search/?api=1&query=Fantasy+Park" }
                 ],
-                hotel: "峴港 Eden Ocean View / Paracel Danang / Canvas Danang / G8 Luxury / Paris Deli / Cicilia / Royal Lotus / Grandvrio City / Aria Grand 或同級",
-                meal: "早：飯店內自助早餐 / 午：方便遊玩(發放代金或自理) / 晚：八層海鮮塔蒸籠宴或古早味石頭火鍋+季節蔬果吃到飽 USD 15"
+                hotel: "EDEN OCEAN VIEW DA NANG",
+                hotelMap: "https://www.google.com/maps/search/?api=1&query=Eden+Ocean+View+Danang",
+                facilities: "✅游泳池 ✅健身房 ✅SPA",
+                meal: {
+                    breakfast: "飯店內自助式早餐",
+                    lunch: "方便遊玩請自理",
+                    dinner: "八層海鮮塔蒸籠宴 或 石頭火鍋+季節蔬菜吃到飽 USD 15"
+                }
             },
             5: {
                 title: "市集溫度：最後的回眸",
                 story: "最後一個清晨，走進韓江市集帶走腰果與咖啡的香氣。帶著滿載回憶的行囊登機。旅程雖然結束，但越南中部的暖色調已深深烙印在心底。",
                 spots: [
-                    { name: "韓江市集 (Han Market)", desc: "峴港最大的民生集散地。這裡不僅是當地人的生活廚房，也是旅人採買特產的最佳據點。高品質的帶殼腰果、口感豐富的果乾、傳統滴漏咖啡器材應有盡有。穿梭在香料氣息與熱鬧吆喝聲的攤位間，能捕捉到峴港最鮮活的庶民生活溫度。", map: "https://www.google.com/maps/search/?api=1&query=Han+Market" },
-                    { name: "峴港機場 ➔ 桃園機場 (BR384)", desc: "回程 BR384 起飛時間為 12:55。提早抵達這座現代化機場，整理行囊與心情，將五天的珍貴敘事帶回溫暖的家。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" }
+                    { name: "韓江市集 (Han Market)", desc: "峴港最大的民生集散地。高品質帶殼腰果、滴漏咖啡器材、手工編織袋應有盡有。穿梭在香料氣息與熱鬧吆喝聲的攤位間，能捕捉到峴港最鮮活的庶民生活溫度。", map: "https://www.google.com/maps/search/?api=1&query=Han+Market" },
+                    { name: "峴港機場 ➔ 桃園機場 (BR384)", desc: "回程 BR384 起飛時間為 12:55。提早抵達機場辦理登機手續，帶著這五天的珍貴敘事返台，回歸溫暖的家。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" }
                 ],
                 hotel: "【溫暖的家】Taiwan",
-                meal: "早：飯店內自助早餐 / 午：機上輕食 / 晚：溫暖的家"
+                hotelMap: "#",
+                facilities: "N/A",
+                meal: {
+                    breakfast: "飯店內自助式早餐",
+                    lunch: "機上輕食",
+                    dinner: "溫暖的家"
+                }
             }
         };
 
@@ -493,33 +547,42 @@
             const data = itineraryData[day];
             const content = document.getElementById('dayContent');
             const selector = document.getElementById('daySelector');
-            selector.innerHTML = Object.keys(itineraryData).map(d => `<div onclick="showDay(${d})" class="day-tab ${d == day ? 'active' : ''}">DAY 0${d}</div>`).join('');
+            selector.innerHTML = Object.keys(itineraryData).map(d => `<button onclick="showDay(${d})" class="day-tab ${d == day ? 'active' : ''}">DAY 0${d}</button>`).join('');
+            
             content.style.opacity = 0;
             setTimeout(() => {
                 content.innerHTML = `
                     <div class="flex flex-col lg:flex-row gap-16 animate-in fade-in duration-700">
-                        <div class="flex-1">
+                        <div class="flex-1 text-left">
                             <h3 class="text-4xl font-black mb-8 serif title-medium leading-tight italic border-b-4 border-wine-red inline-block pb-2">${data.title}</h3>
                             <p class="text-xl text-text-muted font-light mb-16 text-justify leading-relaxed">${data.story}</p>
                             <div class="space-y-16">
                                 ${data.spots.map(s => `
                                     <div class="relative pl-12 border-l border-muted-brown">
-                                        <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-wine-red"></div>
+                                        <div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-wine-red shadow-lg"></div>
                                         <h4 class="font-black text-2xl mb-3 title-large">${s.name}</h4>
                                         <p class="text-text-muted text-lg mb-4 leading-relaxed">${s.desc}</p>
-                                        <a href="${s.map || '#'}" target="_blank" class="map-link">EXPLORE ON MAP ➔</a>
+                                        <a href="${s.map || '#'}" target="_blank" class="map-link">EXPLORE ON GOOGLE MAP ➔</a>
                                     </div>
                                 `).join('')}
                             </div>
                         </div>
-                        <div class="w-full lg:w-[420px] space-y-12">
+                        <div class="w-full lg:w-[420px] space-y-12 text-left">
                             <div class="p-10 border border-muted-brown/30 bg-white shadow-sm">
-                                <h4 class="title-small mb-8 uppercase italic border-b pb-2">Accommodation</h4>
-                                <p class="hotel-text-small mb-4">${data.hotel}</p>
+                                <h4 class="title-small mb-6 uppercase italic border-b pb-2">Accommodation</h4>
+                                <p class="hotel-text-small mb-4 uppercase tracking-tighter">${data.hotel}</p>
+                                <div class="mb-6">
+                                    ${data.facilities.split(' ').map(f => f !== 'N/A' ? `<span class="facility-tag">${f}</span>` : '').join('')}
+                                </div>
+                                ${data.hotelMap !== '#' ? `<a href="${data.hotelMap}" target="_blank" class="map-link">VIEW HOTEL LOCATION ➔</a>` : ''}
                             </div>
                             <div class="p-10 border border-muted-brown/30 bg-white shadow-sm">
-                                <h4 class="title-small mb-8 uppercase italic border-b pb-2">Daily Culinary</h4>
-                                <p class="text-base font-bold text-text-muted leading-loose">${data.meal}</p>
+                                <h4 class="title-small mb-6 uppercase italic border-b pb-2">Daily Culinary</h4>
+                                <div class="space-y-4">
+                                    <div class="meal-item"><span class="meal-label">早｜</span><span class="text-text-muted font-bold">${data.meal.breakfast}</span></div>
+                                    <div class="meal-item"><span class="meal-label">午｜</span><span class="text-text-muted font-bold">${data.meal.lunch}</span></div>
+                                    <div class="meal-item"><span class="meal-label">晚｜</span><span class="text-text-muted font-bold">${data.meal.dinner}</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -528,8 +591,9 @@
             }, 200);
         }
 
+        // --- 預算與支出邏輯 ---
         let expenses = [];
-        const RATES = { TWD: 1, USD: 32.5 }; 
+        const TWD_RATES = { TWD: 1, USD: 32.5 }; 
 
         function addExpense() {
             const item = document.getElementById('exp-item').value;
@@ -549,7 +613,7 @@
             const list = document.getElementById('expense-list');
             let totalTWD = 0;
             list.innerHTML = expenses.map(e => {
-                let twdValue = e.cur === 'VND' ? e.amount / exchangeRateVND : e.amount * (RATES[e.cur] || 1);
+                let twdValue = e.cur === 'VND' ? e.amount / exchangeRateVND : e.amount * (TWD_RATES[e.cur] || 1);
                 totalTWD += twdValue;
                 return `
                     <tr class="group hover:bg-gray-50 border-b border-gray-100 transition-colors">
@@ -562,7 +626,7 @@
                 `;
             }).join('');
             document.getElementById('total-twd').textContent = `NT$ ${totalTWD.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
-            document.getElementById('total-usd').textContent = `$ ${(totalTWD / RATES.USD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            document.getElementById('total-usd').textContent = `$ ${(totalTWD / TWD_RATES.USD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
             document.getElementById('total-vnd').textContent = `${Math.round(totalTWD * exchangeRateVND).toLocaleString()} ₫`;
         }
 
