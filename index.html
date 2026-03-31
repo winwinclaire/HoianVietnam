@@ -312,66 +312,91 @@
         </div>
     </footer>
 
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs (使用模組載入) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = JSON.parse(window.__firebase_config || '{}');
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        // --- 0. 環境檢測與容錯處理 ---
+        let db = null;
+        let auth = null;
+        let currentUser = null;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'vietnam-family-trip';
+
+        try {
+            if (typeof window.__firebase_config !== 'undefined' && window.__firebase_config) {
+                const firebaseConfig = JSON.parse(window.__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+            }
+        } catch (e) {
+            console.warn("Firebase config error, continuing without cloud storage:", e);
+        }
 
         let exchangeRateVND = 785;
         const TWD_RATES = { USD: 32.5, TWD: 1 };
-        let currentUser = null;
 
-        // --- 1. 即時動態數據 ---
+        // --- 1. 即時動態數據 (核心修復) ---
         async function updateLiveInfo() {
+            // 時間更新 (無論環境皆執行)
             const updateClock = () => {
                 const now = new Date();
-                document.getElementById('taipei-time').textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
-                document.getElementById('danang-time').textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+                const taipeiTimeEl = document.getElementById('taipei-time');
+                const danangTimeEl = document.getElementById('danang-time');
+                
+                if (taipeiTimeEl) taipeiTimeEl.textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+                if (danangTimeEl) danangTimeEl.textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
             };
             setInterval(updateClock, 1000);
             updateClock();
 
-            // 台幣匯率
+            // 台幣匯率 (Fetch API)
             try {
                 const rateRes = await fetch('https://api.exchangerate-api.com/v4/latest/TWD');
-                const rateData = await rateRes.json();
-                exchangeRateVND = Math.round(rateData.rates.VND);
-                document.getElementById('live-rate').textContent = exchangeRateVND.toLocaleString();
-            } catch(e) {}
+                if (rateRes.ok) {
+                    const rateData = await rateRes.json();
+                    exchangeRateVND = Math.round(rateData.rates.VND);
+                    const rateEl = document.getElementById('live-rate');
+                    if (rateEl) rateEl.textContent = exchangeRateVND.toLocaleString();
+                }
+            } catch(e) { console.error("TWD Rate fetch failed"); }
 
-            // 美金匯率
+            // 美金匯率 (Fetch API)
             try {
                 const usdRateRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-                const usdData = await usdRateRes.json();
-                const rateUSDVND = Math.round(usdData.rates.VND);
-                document.getElementById('live-rate-usd').textContent = rateUSDVND.toLocaleString();
-            } catch(e) {}
+                if (usdRateRes.ok) {
+                    const usdData = await usdRateRes.json();
+                    const rateUSDVND = Math.round(usdData.rates.VND);
+                    const usdRateEl = document.getElementById('live-rate-usd');
+                    if (usdRateEl) usdRateEl.textContent = rateUSDVND.toLocaleString();
+                }
+            } catch(e) { console.error("USD Rate fetch failed"); }
 
-            // 五日天氣
+            // 五日天氣預報 (Fetch API)
             try {
                 const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=16.0678&longitude=108.2208&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FHo_Chi_Minh');
-                const w = await weatherRes.json();
-                const forecastDiv = document.getElementById('weather-forecast');
-                forecastDiv.innerHTML = '';
-                const weatherIcons = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 51: '🌦️', 61: '🌧️', 95: '⛈️' };
-                for(let i=0; i<5; i++) {
-                    const date = w.daily.time[i].split('-').slice(1).join('/');
-                    const max = Math.round(w.daily.temperature_2m_max[i]);
-                    const min = Math.round(w.daily.temperature_2m_min[i]);
-                    const icon = weatherIcons[w.daily.weathercode[i]] || '🌤️';
-                    forecastDiv.innerHTML += `<div class="weather-card animate-in fade-in zoom-in"><div class="weather-date">${date}</div><div class="text-3xl mb-2">${icon}</div><div class="weather-temp">${max}° / ${min}°</div></div>`;
+                if (weatherRes.ok) {
+                    const w = await weatherRes.json();
+                    const forecastDiv = document.getElementById('weather-forecast');
+                    if (forecastDiv) {
+                        forecastDiv.innerHTML = '';
+                        const weatherIcons = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 51: '🌦️', 61: '🌧️', 95: '⛈️' };
+                        for(let i=0; i<5; i++) {
+                            const date = w.daily.time[i].split('-').slice(1).join('/');
+                            const max = Math.round(w.daily.temperature_2m_max[i]);
+                            const min = Math.round(w.daily.temperature_2m_min[i]);
+                            const icon = weatherIcons[w.daily.weathercode[i]] || '🌤️';
+                            forecastDiv.innerHTML += `<div class="weather-card animate-in fade-in zoom-in"><div class="weather-date">${date}</div><div class="text-3xl mb-2">${icon}</div><div class="weather-temp">${max}° / ${min}°</div></div>`;
+                        }
+                    }
                 }
-            } catch(e) {}
+            } catch(e) { console.error("Weather fetch failed"); }
         }
         updateLiveInfo();
 
+        // --- 2. 行程數據 (保持不變) ---
         const itineraryData = {
             1: {
                 title: "踏上湛藍海岸：峴港初航",
@@ -390,8 +415,8 @@
                 title: "黃牆歲月：會安古鎮脈動",
                 story: "穿越椰林水道，體驗圓籃船旋轉的活力。隨後進入世界遺產會安古鎮，感受大航海時代留下的印記。當夜幕低垂，萬盞燈籠點亮了秋盆河，那是靈魂最安靜的時刻。",
                 spots: [
-                    { name: "迦南島 Cam Kim Island 生態體驗", desc: "前往秋盆河下游。搭乘傳統圓型竹籃船（竹桶船）穿梭在水椰林水道中。觀賞船夫展現高超的『水上瘋狂特技旋轉』與有趣的『樂釣螃蟹趣』。", map: "https://www.google.com/maps/search/?api=1&query=Cam+Thanh+Coconut+Village" },
-                    { name: "會安古鎮文化巡禮 (Walking Tour)", desc: "世界文化遺產。巡禮包含：融合民族和諧的「日本橋」、裝飾華麗且富有歷史意義的「福建會館」與「廣肇會館」、散發古韻的陳富街，以及具有數百年歷史、保留完整木雕藝術的「德安古宅」或「進記古宅」。", map: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town" }
+                    { name: "迦南島 Cam Kim Island 生態體驗", desc: "前往秋盆河下游的迦南島。搭乘傳統圓型竹籃船（竹桶船）穿梭在水椰林水道中。不僅能領略幽靜美景，還能觀賞船夫展現高超的『水上瘋狂特技旋轉』與有趣的『樂釣螃蟹趣』。", map: "https://www.google.com/maps/search/?api=1&query=Cam+Thanh+Coconut+Village" },
+                    { name: "會安古鎮文化巡禮 (Walking Tour)", desc: "世界文化遺產。巡禮包含：融合民族和諧的「日本橋」、裝飾華麗的「福建會館」與「廣肇會館」、散發古韻的陳富街，以及具有數百年歷史、保留完整木雕藝術的「德安古宅」或「進記古宅」。", map: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town" }
                 ],
                 hotel: "HOI AN ROSEMARY BOUTIQUE HOTEL & SPA",
                 hotelMap: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Rosemary+Boutique+Hotel+Spa",
@@ -428,7 +453,7 @@
                 title: "市集溫度：最後的回眸",
                 story: "最後一個清晨，走進韓江市集帶走腰果與咖啡的香氣。帶著滿載回憶的行囊登機。旅程雖然結束，但越南中部的溫暖與色彩，深深烙印在心底。",
                 spots: [
-                    { name: "韓江市集 (Han Market)", desc: "峴港最大的民生集散地。高品質帶殼腰果、滴漏咖啡器材、手工編織袋應有盡有。穿梭在熱鬧吆喝聲攤位間，捕捉峴港最鮮活的庶民生活溫度。", map: "https://www.google.com/maps/search/?api=1&query=Han+Market" },
+                    { name: "韓江市集 (Han Market)", desc: "峴港最大的民生集散地。高品質帶殼腰果、滴漏咖啡器材、手工編織袋應有盡有。穿梭在香料氣息與熱鬧吆喝聲的攤位間，捕捉峴港最鮮活的庶民生活溫度。", map: "https://www.google.com/maps/search/?api=1&query=Han+Market" },
                     { name: "峴港機場 ➔ 桃園機場 (BR384)", desc: "回程 BR384 起飛時間為 12:55。提早抵達機場辦理登機手續，帶著這五天的珍貴敘事返台，回歸溫暖的家。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" }
                 ],
                 hotel: "【溫暖的家】Taiwan",
@@ -441,8 +466,9 @@
         window.showDay = function(day) {
             const d = itineraryData[day];
             const selector = document.getElementById('daySelector');
-            selector.innerHTML = Object.keys(itineraryData).map(k => `<button onclick="showDay(${k})" class="day-tab ${k == day ? 'active' : ''}">DAY 0${k}</button>`).join('');
+            if (selector) selector.innerHTML = Object.keys(itineraryData).map(k => `<button onclick="showDay(${k})" class="day-tab ${k == day ? 'active' : ''}">DAY 0${k}</button>`).join('');
             const content = document.getElementById('dayContent');
+            if (!content) return;
             content.style.opacity = 0;
             setTimeout(() => {
                 content.innerHTML = `<div class="flex flex-col lg:flex-row gap-16"><div class="flex-1 text-left"><h3 class="text-4xl font-black mb-8 serif title-medium leading-tight italic border-b-4 border-wine-red inline-block pb-2">${d.title}</h3><p class="text-xl text-text-muted font-light mb-16 text-justify leading-relaxed">${d.story}</p><div class="space-y-16">${d.spots.map(s => `<div class="relative pl-12 border-l border-muted-brown"><div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-wine-red shadow-lg"></div><h4 class="font-black text-2xl mb-3 title-large">${s.name}</h4><p class="text-text-muted text-lg mb-4 leading-relaxed">${s.desc}</p><a href="${s.map || '#'}" target="_blank" class="map-link">EXPLORE ON GOOGLE MAP ➔</a></div>`).join('')}</div></div><div class="w-full lg:w-[420px] space-y-12 text-left"><div class="p-10 border border-muted-brown/30 bg-white shadow-sm rounded-2xl"><h4 class="title-small mb-6 uppercase italic border-b pb-2">Accommodation</h4><p class="hotel-text-small mb-4 uppercase tracking-tighter">${d.hotel}</p><div class="mb-6">${d.facilities.split(' ').map(f => f !== 'N/A' ? `<span class="facility-tag">${f}</span>` : '').join('')}</div>${d.hotelMap !== '#' ? `<a href="${d.hotelMap}" target="_blank" class="map-link">VIEW HOTEL LOCATION ➔</a>` : ''}</div><div class="p-10 border border-muted-brown/30 bg-white shadow-sm rounded-2xl"><h4 class="title-small mb-6 uppercase italic border-b pb-2">Daily Culinary</h4><div class="meal-line"><span class="meal-tag">早｜</span><span class="text-text-muted font-bold">${d.meal.b}</span></div><div class="meal-line"><span class="meal-tag">午｜</span><span class="text-text-muted font-bold">${d.meal.l}</span></div><div class="meal-line"><span class="meal-tag">晚｜</span><span class="text-text-muted font-bold">${d.meal.d}</span></div></div></div></div>`;
@@ -451,8 +477,12 @@
         };
         showDay(1);
 
-        // --- 3. Firestore 支出系統 (永久保存) ---
+        // --- 3. Firestore 支出系統 (容錯處理) ---
         async function initStorage() {
+            if (!auth || !db) {
+                console.info("Cloud storage disabled in this environment.");
+                return;
+            }
             const initAuth = async () => {
                 if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
                     await signInWithCustomToken(auth, window.__initial_auth_token);
@@ -478,26 +508,49 @@
             const amount = parseFloat(document.getElementById('exp-amount').value);
             const cur = document.getElementById('exp-currency').value;
             const cat = document.getElementById('exp-cat').value;
-            if (!item || isNaN(amount) || !currentUser) return;
+            if (!item || isNaN(amount)) return;
+
+            if (!currentUser || !db) {
+                // 回退到內存顯示 (GitHub環境)
+                const tempExpenses = [{ id: Date.now().toString(), item, amount, cur, cat }];
+                renderExpenses(tempExpenses, true);
+                return;
+            }
+
             await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), { item, amount, cur, cat, timestamp: Date.now() });
             document.getElementById('exp-item').value = '';
             document.getElementById('exp-amount').value = '';
         }
-        document.getElementById('add-btn').onclick = addExpense;
+        const addBtn = document.getElementById('add-btn');
+        if (addBtn) addBtn.onclick = addExpense;
 
-        window.deleteExpense = async (id) => { if (!currentUser) return; await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id)); };
+        window.deleteExpense = async (id) => { 
+            if (!currentUser || !db) return;
+            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id)); 
+        };
 
-        function renderExpenses(list) {
+        let localExpenses = []; // 用於無雲端環境的本地緩存
+        function renderExpenses(list, isLocal = false) {
             const tbody = document.getElementById('expense-list');
+            if (!tbody) return;
+            
+            if (isLocal) localExpenses = [...localExpenses, ...list];
+            const displayList = isLocal ? localExpenses : list;
+
             let totalTWD = 0;
-            tbody.innerHTML = list.map(e => {
+            tbody.innerHTML = displayList.map(e => {
                 let twdValue = e.cur === 'VND' ? e.amount / exchangeRateVND : e.amount * (TWD_RATES[e.cur] || 1);
                 totalTWD += twdValue;
                 return `<tr class="group hover:bg-gray-50 border-b border-gray-100 transition-colors"><td class="py-8 px-4 font-black">${e.item}</td><td class="py-8 px-4 title-small text-sm font-black uppercase tracking-widest italic">${e.cat}</td><td class="py-8 px-4 text-right text-gray-400 font-mono tracking-tighter">${e.amount.toLocaleString()} ${e.cur}</td><td class="py-8 px-4 text-right font-black text-wine-red tracking-tight">NT$ ${Math.round(twdValue).toLocaleString()}</td><td class="py-8 px-4 text-right"><button onclick="deleteExpense('${e.id}')" class="text-red-300 hover:text-red-700 transition-all font-bold">✕</button></td></tr>`;
             }).join('');
-            document.getElementById('total-twd').textContent = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
-            document.getElementById('total-usd').textContent = `$ ${(totalTWD / TWD_RATES.USD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            document.getElementById('total-vnd').textContent = `${Math.round(totalTWD * exchangeRateVND).toLocaleString()} ₫`;
+            
+            const totalTwdEl = document.getElementById('total-twd');
+            const totalUsdEl = document.getElementById('total-usd');
+            const totalVndEl = document.getElementById('total-vnd');
+            
+            if (totalTwdEl) totalTwdEl.textContent = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
+            if (totalUsdEl) totalUsdEl.textContent = `$ ${(totalTWD / TWD_RATES.USD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            if (totalVndEl) totalVndEl.textContent = `${Math.round(totalTWD * exchangeRateVND).toLocaleString()} ₫`;
         }
         initStorage();
     </script>
