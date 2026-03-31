@@ -13,32 +13,22 @@
             --wine-red: #8b0000;
             --soft-beige: #f5f2ed;
             --text-main: #1e293b;
-            --text-muted: #475569;
             --gold-bright: #d4a017;
-            
             --do-blue: #005a8d;
             --buy-gold: #b8860b;
             --visit-green: #2d6a4f;
             --see-clay: #a52a2a;
         }
 
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            color: var(--text-main);
-            background-color: var(--soft-beige);
-            line-height: 1.8;
-        }
-
+        body { font-family: 'Noto Sans TC', sans-serif; color: var(--text-main); background-color: var(--soft-beige); line-height: 1.8; }
         h1, h2, h3, .serif { font-family: 'Noto Serif TC', serif; }
 
-        /* 導覽列置頂 */
         .fixed-nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             background: rgba(47, 53, 66, 0.98); backdrop-filter: blur(10px);
             border-bottom: 2px solid var(--muted-brown); padding: 0.75rem 1rem;
         }
 
-        /* 錨點跳轉修正 */
         section { scroll-margin-top: 100px; }
 
         .nav-tag {
@@ -50,7 +40,6 @@
 
         .title-small { color: var(--muted-brown); font-size: 1.5rem; font-weight: 900; }
 
-        /* 首頁故事 Cover */
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?auto=format&fit=crop&w=1600&q=80');
             background-size: cover; background-position: center; height: 100vh;
@@ -62,7 +51,6 @@
             border-left: 10px solid var(--wine-red); max-width: 950px; backdrop-filter: blur(5px);
         }
 
-        /* 動態內數值放大 */
         .dynamic-value-large { color: var(--gold-bright); font-weight: 900; font-size: 3rem; line-height: 1; }
         .dynamic-value-sub { color: var(--gold-bright); font-weight: 900; font-size: 2.2rem; line-height: 1; }
 
@@ -95,7 +83,7 @@
         .activity-card h4 { font-size: 1.5rem; }
 
         .meal-line { border-left: 4px solid var(--muted-brown); padding-left: 0.75rem; margin: 0.5rem 0; }
-        .meal-tag { font-weight: 900; color: var(--wine-red); margin-right: 0.5rem; }
+        .meal-tag { font-weight: 900; color: var(--wine-red); margin-right: 0.5rem; min-width: 2.5rem; display: inline-block; }
 
         .weather-card { background: white; padding: 1rem; border-radius: 12px; border: 1px solid #eee; text-align: center; }
         .weather-date { font-size: 0.75rem; font-weight: 900; color: var(--muted-brown); margin-bottom: 5px; }
@@ -106,7 +94,6 @@
 </head>
 <body class="pt-16">
 
-    <!-- 標籤導覽列 -->
     <nav class="fixed-nav">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
             <div class="text-xl font-black serif text-muted-brown tracking-widest hidden lg:block uppercase">Exploration Diary</div>
@@ -121,7 +108,6 @@
         </div>
     </nav>
 
-    <!-- 1. 故事敘事區 -->
     <section id="story">
         <header class="hero-section">
             <div class="px-6">
@@ -138,25 +124,22 @@
         </header>
     </section>
 
-    <!-- 2. 即時動態資訊 -->
     <section id="dynamic" class="max-w-7xl mx-auto py-24 px-6 text-left">
         <div class="mb-12">
             <h2 class="text-4xl font-black serif text-deep-gray uppercase border-b-2 border-muted-brown inline-block pr-16 pb-2">即時動態資訊</h2>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="space-y-6">
-                <!-- 航班與時區 -->
                 <div class="p-8 bg-white border border-gray-200 shadow-sm rounded-xl">
                     <p class="title-small uppercase mb-6 tracking-widest italic border-b pb-2">Flight & Live Time</p>
                     <div class="space-y-4 font-black">
                         <p class="text-deep-gray flex justify-between"><span>TPE ➔ DAD (BR383)</span><span class="text-wine-red">09:45 - 11:35</span></p>
                         <p class="text-deep-gray flex justify-between"><span>DAD ➔ TPE (BR384)</span><span class="text-wine-red">12:55 - 16:45</span></p>
                         <hr>
-                        <p class="flex justify-between items-center text-lg"><span>台北系統</span><span id="taipei-time" class="font-mono text-2xl">--:--:--</span></p>
-                        <p class="flex justify-between items-center text-wine-red text-lg"><span>峴港系統</span><span id="danang-time" class="font-mono text-2xl">--:--:--</span></p>
+                        <p class="flex justify-between items-center text-lg"><span>台北時間</span><span id="taipei-time" class="font-mono text-2xl">--:--:--</span></p>
+                        <p class="flex justify-between items-center text-wine-red text-lg"><span>峴港時間</span><span id="danang-time" class="font-mono text-2xl">--:--:--</span></p>
                     </div>
                 </div>
-                <!-- 即時匯率 -->
                 <div class="p-8 bg-white border border-gray-200 shadow-sm rounded-xl">
                     <p class="title-small uppercase mb-6 tracking-widest italic border-b pb-2">Live Exchange Rate</p>
                     <div class="space-y-6">
@@ -171,40 +154,32 @@
                     </div>
                 </div>
             </div>
-            <!-- 五日天氣預報 -->
             <div class="lg:col-span-2 p-8 bg-white border border-gray-200 shadow-sm rounded-xl">
                 <p class="title-small uppercase mb-6 tracking-widest italic border-b pb-2">Da Nang 5-Day Forecast (峴港預報)</p>
-                <div id="weather-forecast" class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                    <!-- JS 注入天氣數據 -->
-                </div>
+                <div id="weather-forecast" class="grid grid-cols-2 md:grid-cols-5 gap-4"></div>
             </div>
         </div>
     </section>
 
-    <!-- 3. 詳細行程 -->
     <section id="itinerary" class="py-24 px-6 bg-white border-y border-gray-100 text-center">
         <h2 class="text-6xl font-black serif uppercase mb-4 tracking-tighter text-deep-gray">文化探索地圖</h2>
-        <p class="title-small italic uppercase mb-12 text-center">Journey through the heart of Vietnam (04/03 - 04/07)</p>
+        <p class="title-small italic uppercase mb-12 text-center">Narrative Journey Sequence (04/03 - 04/07)</p>
         <div class="flex justify-center flex-wrap gap-1 mb-16" id="daySelector"></div>
-        <div id="dayContent" class="max-w-6xl mx-auto bg-[#fdfdfd] border border-gray-100 p-8 md:p-24 min-h-[750px] shadow-sm text-left animate-in fade-in duration-500">
-            <!-- JS 內容注入 -->
-        </div>
+        <div id="dayContent" class="max-w-6xl mx-auto bg-[#fdfdfd] border border-gray-100 p-8 md:p-24 min-h-[750px] shadow-sm text-left animate-in fade-in duration-500"></div>
     </section>
 
-    <!-- 4. 必須 (感官精選) -->
     <section id="must" class="max-w-7xl mx-auto py-24 px-6 text-left">
         <div class="mb-12">
-            <h2 class="text-4xl font-black serif text-deep-gray uppercase border-b-2 border-muted-brown inline-block pr-20 pb-2">感官文化必須</h2>
+            <h2 class="text-4xl font-black serif text-deep-gray uppercase border-b-2 border-muted-brown inline-block pr-16 pb-2">感官文化必須</h2>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="activity-card"><h3 class="text-2xl font-black mb-6 color-do serif border-b border-blue-100 pb-2">必做 Do</h3><ul class="space-y-4 must-list-item color-do"><li>● 秋盆河水燈祈福願望</li><li>● 越式藥草洗髮 SPA體驗</li><li>● 迦南島竹桶船特技旋轉</li></ul></div>
-            <div class="activity-card"><h3 class="text-2xl font-black mb-6 color-buy serif border-b border-yellow-100 pb-2">必買 Buy</h3><ul class="space-y-4 must-list-item color-buy"><li>● 手作帶殼腰果與香料果乾</li><li>● 越式傳統滴漏咖啡套組</li><li>● Marou 頂級工藝巧克力</li></ul></div>
-            <div class="activity-card"><h3 class="text-2xl font-black mb-6 color-visit serif border-b border-green-100 pb-2">必逛 Visit</h3><ul class="space-y-4 must-list-item color-visit"><li>● 會安古鎮黃牆老街小巷</li><li>● 韓江在地生活風情市集</li><li>● 峴港粉紅童話大教堂</li></ul></div>
-            <div class="activity-card"><h3 class="text-2xl font-black mb-6 color-see serif border-b border-red-100 pb-2">必看 See</h3><ul class="space-y-4 must-list-item color-see"><li>● 會安回憶河上大型劇場</li><li>● 龍橋週末驚艷噴火表演</li><li>● 佛手橋山嵐與雲海交融</li></ul></div>
+            <div class="activity-card shadow-sm"><h3 class="text-xl font-black mb-6 color-do serif">必做 Do</h3><ul class="space-y-4 must-list-item color-do"><li>● 秋盆河水燈祈福願望</li><li>● 越式藥草洗髮 SPA體驗</li><li>● 迦南島竹桶船特技旋轉</li></ul></div>
+            <div class="activity-card shadow-sm"><h3 class="text-xl font-black mb-6 color-buy serif">必買 Buy</h3><ul class="space-y-4 must-list-item color-buy"><li>● 手作帶殼腰果與香料果乾</li><li>● 越式傳統滴漏咖啡套組</li><li>● Marou 頂級工藝巧克力</li></ul></div>
+            <div class="activity-card shadow-sm"><h3 class="text-xl font-black mb-6 color-visit serif">必逛 Visit</h3><ul class="space-y-4 must-list-item color-visit"><li>● 會安古鎮黃牆老街小巷</li><li>● 韓江在地生活風情市集</li><li>● 峴港粉紅童話大教堂</li></ul></div>
+            <div class="activity-card shadow-sm"><h3 class="text-xl font-black mb-6 color-see serif">必看 See</h3><ul class="space-y-4 must-list-item color-see"><li>● 會安回憶河上大型劇場</li><li>● 龍橋週末驚艷噴火表演</li><li>● 佛手橋山嵐與雲海交融</li></ul></div>
         </div>
     </section>
 
-    <!-- 5. 參考 & 旅遊資訊 -->
     <section id="memo" class="bg-white py-32 px-6 border-t border-gray-100 text-left">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
             <div class="space-y-12">
@@ -219,88 +194,46 @@
             <div class="space-y-10">
                 <h3 class="text-3xl font-black mb-8 italic title-large serif border-b-4 border-deep-gray inline-block pr-16 pb-2">自費項目明細</h3>
                 <div class="space-y-8">
-                    <div class="activity-card shadow-sm hover:shadow-lg transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-black text-deep-gray">夜遊峴港韓江</h4>
-                            <span class="text-wine-red font-black text-2xl">NT$ 800</span>
-                        </div>
-                        <p class="text-lg text-text-muted italic">搭船夜遊韓江＋飲料乙杯。欣賞十座地標大橋燈火。如天候不佳或煙火節無法參加。危險等級：B</p>
-                    </div>
-                    <div class="activity-card shadow-sm hover:shadow-lg transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-black text-deep-gray">熱石全身按摩 (90分鐘)</h4>
-                            <span class="text-wine-red font-black text-2xl">NT$ 1,000</span>
-                        </div>
-                        <p class="text-lg text-text-muted italic">利用火山熱石傳導舒緩疲勞。10位成行，限12歲以上。小費約 VND 110k 起。危險等級：C</p>
-                    </div>
-                    <div class="activity-card shadow-sm hover:shadow-lg transition">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-black text-deep-gray">峴港越式洗頭 (90分鐘)</h4>
-                            <span class="text-wine-red font-black text-2xl">NT$ 1,000</span>
-                        </div>
-                        <p class="text-lg text-text-muted italic">含洗髮、按摩、護膚。感受道地美容文化。10位成行，含小費。危險等級：C</p>
-                    </div>
-                    <div class="activity-card shadow-sm hover:shadow-lg transition" style="border-left-color: var(--wine-red)">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-black text-deep-gray">會安回憶歌舞秀</h4>
-                            <span class="text-wine-red font-black text-2xl">NT$ 1,300</span>
-                        </div>
-                        <p class="text-lg text-text-muted italic">越南最大實景歌舞秀。穿越16世紀絲路商港。10人出團。危險等級：C</p>
-                    </div>
+                    <div class="activity-card shadow-sm hover:shadow-lg transition"><div class="flex justify-between items-start mb-2"><h4 class="font-black text-deep-gray">夜遊峴港韓江</h4><span class="text-wine-red font-black text-2xl">NT$ 800</span></div><p class="text-lg text-text-muted italic">搭船欣賞地標大橋燈火。如天候不佳或煙火節則取消。</p></div>
+                    <div class="activity-card shadow-sm hover:shadow-lg transition"><div class="flex justify-between items-start mb-2"><h4 class="font-black text-deep-gray">熱石全身按摩</h4><span class="text-wine-red font-black text-2xl">NT$ 1,000</span></div><p class="text-lg text-text-muted italic">熱石熱傳導舒緩疲勞(90分鐘)。10位成行，限12歲以上。小費約 VND 110k 起。</p></div>
+                    <div class="activity-card shadow-sm hover:shadow-lg transition"><div class="flex justify-between items-start mb-2"><h4 class="font-black text-deep-gray">峴港越式洗頭</h4><span class="text-wine-red font-black text-2xl">NT$ 1,000</span></div><p class="text-lg text-text-muted italic">感受道地感官美學SPA。含洗髮、頭部按摩、肩頸放鬆。報價已含小費。</p></div>
+                    <div class="activity-card shadow-sm hover:shadow-lg transition" style="border-left-color: var(--wine-red)"><div class="flex justify-between items-start mb-2"><h4 class="font-black text-deep-gray">會安回憶歌舞秀</h4><span class="text-wine-red font-black text-2xl">NT$ 1,300</span></div><p class="text-lg text-text-muted italic">越南最大實景劇場秀。穿越16世紀絲路商港歷史。10人出團。</p></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. 支出帳本 (雲端存儲) -->
     <section id="expenses" class="max-w-6xl mx-auto py-32 px-6 mb-32 text-left">
         <div class="bg-white border border-gray-200 p-10 md:p-24 shadow-sm rounded-3xl">
             <h2 class="text-5xl font-black serif text-deep-gray italic uppercase tracking-tighter text-center">Expenditure Ledger</h2>
-            <p class="title-small font-bold mt-4 uppercase tracking-[0.3em] text-xs text-center mb-16">Permanent Cloud Storage for the Family</p>
+            <p class="title-small font-bold mt-4 uppercase tracking-[0.3em] text-xs text-center mb-16">Universal Storage (Cloud + Local)</p>
 
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-16">
-                <input type="text" id="exp-item" placeholder="項目內容" class="p-4 bg-gray-50 border-b-2 border-deep-gray text-deep-gray font-bold outline-none focus:border-wine-red transition-all">
+                <input type="text" id="exp-item" placeholder="項目內容" class="p-4 bg-gray-50 border-b-2 border-deep-gray text-deep-gray font-bold outline-none focus:border-wine-red">
                 <input type="number" id="exp-amount" placeholder="金額" class="p-4 bg-gray-50 border-b-2 border-deep-gray text-deep-gray font-mono outline-none focus:border-wine-red">
                 <select id="exp-currency" class="p-4 bg-white border border-gray-300 font-black text-deep-gray">
-                    <option value="VND">越幣 (VND)</option>
-                    <option value="TWD">台幣 (TWD)</option>
-                    <option value="USD">美金 (USD)</option>
+                    <option value="VND">越幣 (VND)</option><option value="TWD">台幣 (TWD)</option><option value="USD">美金 (USD)</option>
                 </select>
                 <select id="exp-cat" class="p-4 bg-white border border-gray-300 font-black text-deep-gray">
                     <option value="團費">💰 團費</option><option value="餐飲">🍴 餐飲</option><option value="活動">🎟️ 活動</option>
                     <option value="交通">🚗 交通</option><option value="購物">🛍️ 購物</option><option value="其他">🌀 其他</option>
                 </select>
-                <button id="add-btn" class="bg-deep-gray text-white font-black py-4 hover:bg-wine-red transition-all shadow-lg active:scale-95 rounded-xl">雲端新增 +</button>
+                <button id="add-btn" class="bg-deep-gray text-white font-black py-4 hover:bg-wine-red transition-all shadow-lg active:scale-95 rounded-xl">新增紀錄 +</button>
             </div>
 
             <div class="overflow-x-auto mb-16">
                 <table class="w-full text-left text-xl">
                     <thead class="title-small border-b border-muted-brown">
-                        <tr class="text-xs font-black uppercase tracking-widest italic">
-                            <th class="py-6 px-4">Description</th>
-                            <th class="py-6 px-4">Category</th>
-                            <th class="py-6 px-4 text-right">Raw</th>
-                            <th class="py-6 px-4 text-right">TWD Est.</th>
-                            <th class="py-6 px-4"></th>
-                        </tr>
+                        <tr class="text-xs font-black uppercase tracking-widest italic"><th class="py-6 px-4">Description</th><th class="py-6 px-4">Category</th><th class="py-6 px-4 text-right">Raw</th><th class="py-6 px-4 text-right">TWD Est.</th><th class="py-6 px-4"></th></tr>
                     </thead>
                     <tbody id="expense-list" class="text-slate-700 font-bold"></tbody>
                 </table>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="total-box-twd p-10 rounded-xl text-center shadow-lg transform transition hover:-translate-y-2">
-                    <p class="text-xs font-black uppercase mb-3 opacity-80 italic">Total NTD</p>
-                    <p id="total-twd" class="text-5xl font-black">NT$ 0</p>
-                </div>
-                <div class="total-box-usd p-10 rounded-xl text-center shadow-lg transform transition hover:-translate-y-2">
-                    <p class="text-xs font-black uppercase mb-3 opacity-80 italic">Total USD</p>
-                    <p id="total-usd" class="text-5xl font-black">$ 0.00</p>
-                </div>
-                <div class="total-box-vnd p-10 rounded-xl text-center shadow-lg transform transition opacity-90">
-                    <p class="text-xs font-black uppercase mb-3 opacity-80 italic">Total VND</p>
-                    <p id="total-vnd" class="text-5xl font-black">0 ₫</p>
-                </div>
+                <div class="total-box-twd p-10 rounded-xl text-center shadow-lg transform transition hover:-translate-y-2"><p class="text-xs font-black uppercase mb-3 opacity-80 italic">Total NTD</p><p id="total-twd" class="text-5xl font-black">NT$ 0</p></div>
+                <div class="total-box-usd p-10 rounded-xl text-center shadow-lg transform transition hover:-translate-y-2"><p class="text-xs font-black uppercase mb-3 opacity-80 italic">Total USD</p><p id="total-usd" class="text-5xl font-black">$ 0.00</p></div>
+                <div class="total-box-vnd p-10 rounded-xl text-center shadow-lg transform transition opacity-90"><p class="text-xs font-black uppercase mb-3 opacity-80 italic">Total VND</p><p id="total-vnd" class="text-5xl font-black">0 ₫</p></div>
             </div>
         </div>
     </section>
@@ -312,99 +245,72 @@
         </div>
     </footer>
 
-    <!-- Firebase SDKs (使用模組載入) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- 0. 環境檢測與容錯處理 ---
-        let db = null;
-        let auth = null;
-        let currentUser = null;
+        let db = null; let auth = null; let currentUser = null;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'vietnam-family-trip';
+        const isExternalEnv = typeof window.__firebase_config === 'undefined' || !window.__firebase_config;
 
         try {
-            if (typeof window.__firebase_config !== 'undefined' && window.__firebase_config) {
+            if (!isExternalEnv) {
                 const firebaseConfig = JSON.parse(window.__firebase_config);
                 const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
+                auth = getAuth(app); db = getFirestore(app);
             }
-        } catch (e) {
-            console.warn("Firebase config error, continuing without cloud storage:", e);
-        }
+        } catch (e) { console.warn("Firebase config missing, using LocalStorage fallback."); }
 
         let exchangeRateVND = 785;
         const TWD_RATES = { USD: 32.5, TWD: 1 };
 
-        // --- 1. 即時動態數據 (核心修復) ---
         async function updateLiveInfo() {
-            // 時間更新 (無論環境皆執行)
             const updateClock = () => {
                 const now = new Date();
-                const taipeiTimeEl = document.getElementById('taipei-time');
-                const danangTimeEl = document.getElementById('danang-time');
-                
-                if (taipeiTimeEl) taipeiTimeEl.textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
-                if (danangTimeEl) danangTimeEl.textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+                document.getElementById('taipei-time').textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+                document.getElementById('danang-time').textContent = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
             };
-            setInterval(updateClock, 1000);
-            updateClock();
+            setInterval(updateClock, 1000); updateClock();
 
-            // 台幣匯率 (Fetch API)
             try {
                 const rateRes = await fetch('https://api.exchangerate-api.com/v4/latest/TWD');
-                if (rateRes.ok) {
-                    const rateData = await rateRes.json();
-                    exchangeRateVND = Math.round(rateData.rates.VND);
-                    const rateEl = document.getElementById('live-rate');
-                    if (rateEl) rateEl.textContent = exchangeRateVND.toLocaleString();
-                }
-            } catch(e) { console.error("TWD Rate fetch failed"); }
+                const rateData = await rateRes.json();
+                exchangeRateVND = Math.round(rateData.rates.VND);
+                document.getElementById('live-rate').textContent = exchangeRateVND.toLocaleString();
+            } catch(e) {}
 
-            // 美金匯率 (Fetch API)
             try {
-                const usdRateRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-                if (usdRateRes.ok) {
-                    const usdData = await usdRateRes.json();
-                    const rateUSDVND = Math.round(usdData.rates.VND);
-                    const usdRateEl = document.getElementById('live-rate-usd');
-                    if (usdRateEl) usdRateEl.textContent = rateUSDVND.toLocaleString();
-                }
-            } catch(e) { console.error("USD Rate fetch failed"); }
+                const usdRes = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const usdData = await usdRes.json();
+                document.getElementById('live-rate-usd').textContent = Math.round(usdData.rates.VND).toLocaleString();
+            } catch(e) {}
 
-            // 五日天氣預報 (Fetch API)
             try {
                 const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=16.0678&longitude=108.2208&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia%2FHo_Chi_Minh');
-                if (weatherRes.ok) {
-                    const w = await weatherRes.json();
-                    const forecastDiv = document.getElementById('weather-forecast');
-                    if (forecastDiv) {
-                        forecastDiv.innerHTML = '';
-                        const weatherIcons = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 51: '🌦️', 61: '🌧️', 95: '⛈️' };
-                        for(let i=0; i<5; i++) {
-                            const date = w.daily.time[i].split('-').slice(1).join('/');
-                            const max = Math.round(w.daily.temperature_2m_max[i]);
-                            const min = Math.round(w.daily.temperature_2m_min[i]);
-                            const icon = weatherIcons[w.daily.weathercode[i]] || '🌤️';
-                            forecastDiv.innerHTML += `<div class="weather-card animate-in fade-in zoom-in"><div class="weather-date">${date}</div><div class="text-3xl mb-2">${icon}</div><div class="weather-temp">${max}° / ${min}°</div></div>`;
-                        }
-                    }
+                const w = await weatherRes.json();
+                const forecastDiv = document.getElementById('weather-forecast');
+                forecastDiv.innerHTML = '';
+                const icons = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 51: '🌦️', 61: '🌧️', 95: '⛈️' };
+                for(let i=0; i<5; i++) {
+                    const date = w.daily.time[i].split('-').slice(1).join('/');
+                    const max = Math.round(w.daily.temperature_2m_max[i]);
+                    const min = Math.round(w.daily.temperature_2m_min[i]);
+                    const icon = icons[w.daily.weathercode[i]] || '🌤️';
+                    forecastDiv.innerHTML += `<div class="weather-card animate-in fade-in zoom-in"><div class="weather-date">${date}</div><div class="text-3xl mb-2">${icon}</div><div class="weather-temp">${max}° / ${min}°</div></div>`;
                 }
-            } catch(e) { console.error("Weather fetch failed"); }
+            } catch(e) {}
         }
         updateLiveInfo();
 
-        // --- 2. 行程數據 (保持不變) ---
         const itineraryData = {
             1: {
                 title: "踏上湛藍海岸：峴港初航",
-                story: "當機輪輕觸峴港跑道，南中國海的微風正式宣告旅程開始。這座被稱為『東方夏威夷』的城市，以山海交織的美景迎接世界。第一晚，我們在港都夜色中品味日式精緻與越式熱情的融合。",
+                story: "降落在『東方夏威夷』峴港。首日探訪守護港城的山茶半島與美溪沙灘，在海風中開啟度假心境。",
                 spots: [
-                    { name: "桃園國際機場 ➔ 峴港機場 (BR383)", desc: "搭乘長榮航空由台北直飛。抵達後由專業導遊迎接，開啟五天感官之旅。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" },
-                    { name: "山茶半島與靈應寺 (Son Tra Peninsula)", desc: "矗立於峴港東北部的守護屏障。靈應寺內供奉著高達 67 米、由白玉大理石精雕而成的觀音像。此處不僅是信仰中心，更是俯瞰大峴港灣弧型海岸線的最佳地點。寺內古木參天，清靜莊嚴。", map: "https://www.google.com/maps/search/?api=1&query=Linh+Ung+Pagoda" },
-                    { name: "美溪沙灘 (My Khe Beach)", desc: "被富比士評選為『世界最美六大沙灘之一』。長達 900 公尺的海岸線擁有細軟如粉的白沙。傍晚時分，沙灘在夕陽餘暉下呈現金黃色。踏在細柔的沙灘上，開啟度假心境。", map: "https://www.google.com/maps/search/?api=1&query=My+Khe+Beach" }
+                    { name: "桃園機場 ➔ 峴港機場 (BR383)", desc: "搭乘長榮航空由台北直飛。抵達後由導遊迎接，開啟五天感官之旅。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" },
+                    { name: "山茶半島與靈應寺 (Son Tra Peninsula)", desc: "矗立於峴港東北部的守護屏障。供奉高達 67 米之白玉大理石觀音像。從露台鳥瞰，整座峴港灣弧形海岸線與現代摩天大樓盡收眼底，波光粼粼的湛藍海水與青翠山色交織，展現壯麗氣勢。", map: "https://www.google.com/maps/search/?api=1&query=Linh+Ung+Pagoda" },
+                    { name: "美溪沙灘 (My Khe Beach)", desc: "富比士評選『世界最美六大沙灘之一』。海岸線擁有細軟白沙與溫暖海水。傍晚時分，沙灘在夕陽下呈現金黃色，是開啟度假氛圍的最佳場域。", map: "https://www.google.com/maps/search/?api=1&query=My+Khe+Beach" }
                 ],
                 hotel: "EDEN OCEAN VIEW DA NANG",
                 hotelMap: "https://www.google.com/maps/search/?api=1&query=Eden+Ocean+View+Danang",
@@ -413,10 +319,10 @@
             },
             2: {
                 title: "黃牆歲月：會安古鎮脈動",
-                story: "穿越椰林水道，體驗圓籃船旋轉的活力。隨後進入世界遺產會安古鎮，感受大航海時代留下的印記。當夜幕低垂，萬盞燈籠點亮了秋盆河，那是靈魂最安靜的時刻。",
+                story: "穿越椰林水道，體驗圓籃船旋轉的活力。當夜幕低垂，萬盞燈籠點亮了秋盆河，那是靈魂最安靜的時刻。",
                 spots: [
-                    { name: "迦南島 Cam Kim Island 生態體驗", desc: "前往秋盆河下游的迦南島。搭乘傳統圓型竹籃船（竹桶船）穿梭在水椰林水道中。不僅能領略幽靜美景，還能觀賞船夫展現高超的『水上瘋狂特技旋轉』與有趣的『樂釣螃蟹趣』。", map: "https://www.google.com/maps/search/?api=1&query=Cam+Thanh+Coconut+Village" },
-                    { name: "會安古鎮文化巡禮 (Walking Tour)", desc: "世界文化遺產。巡禮包含：融合民族和諧的「日本橋」、裝飾華麗的「福建會館」與「廣肇會館」、散發古韻的陳富街，以及具有數百年歷史、保留完整木雕藝術的「德安古宅」或「進記古宅」。", map: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town" }
+                    { name: "迦南島 Cam Kim Island 生態體驗", desc: "搭乘傳統圓型竹籃船（竹桶船）穿梭在水椰林水道中。觀賞船夫展現高超的『水上瘋狂特技旋轉』與有趣的『樂釣螃蟹趣』。感受越南純樸農漁村的生命力。", map: "https://www.google.com/maps/search/?api=1&query=Cam+Thanh+Coconut+Village" },
+                    { name: "會安古鎮文化巡禮 (Walking Tour)", desc: "世界文化遺產。巡禮包含：融合中日風格的「日本橋」、雕樑畫棟的「福建會館」與「廣肇會館」、散發古韻的陳富街，以及具有數百年歷史、保留完整木雕藝術的「德安古宅」或「進記古宅」。每一面飽經風霜的黃牆都在述說海上絲路的輝煌。", map: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Ancient+Town" }
                 ],
                 hotel: "HOI AN ROSEMARY BOUTIQUE HOTEL & SPA",
                 hotelMap: "https://www.google.com/maps/search/?api=1&query=Hoi+An+Rosemary+Boutique+Hotel+Spa",
@@ -425,11 +331,11 @@
             },
             3: {
                 title: "粉紅夢幻：城市浪漫註腳",
-                story: "從古老的大理石山到後現代美學的 APEC 公園，峴港是一座新舊交融的奇蹟之城。我們在巨龍橋畔看見國家的崛起，並在粉紅光影中捕捉法式浪漫。",
+                story: "從古老的大理石山到現代美學的 APEC 公園，峴港是一座新舊交融的奇蹟之城。我們在巨龍橋畔看見城市的活力。",
                 spots: [
-                    { name: "會安 ➔ 五行山 (水山登高 + 上下山電梯)", desc: "由金木水火土五座大理石山峰組成。我們搭乘景觀電梯登上最宏偉的「水山」。探索天然溶洞（如藏龍洞）、莊嚴佛龕與百年寺廟。登頂望江台可遠眺大海與其餘四座奇石山峰。", map: "https://www.google.com/maps/search/?api=1&query=Marble+Mountains" },
-                    { name: "粉紅大教堂 (外部參觀) + APEC 公園", desc: "【粉紅大教堂】建於1923年法屬時期，以糖果般的粉嫩外牆與屋頂公雞風標聞名。【APEC 雕塑公園】核心建築造型如巨大的白色『飛箏』展翅高飛，象徵著越南經濟的騰飛與現代美學的融合。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Cathedral" },
-                    { name: "龍橋 (Dragon Bridge) & 龍首魚身雕像", desc: "橫跨韓江的龍橋是峴港最具代表性的精神地標，象徵國家崛起。橋頭矗立著噴水的『龍首魚身』石雕，寓意平安繁榮。週末夜晚更有震撼的噴火與噴水表演。", map: "https://www.google.com/maps/search/?api=1&query=Dragon+Bridge" }
+                    { name: "五行山：水山登高 (上下山電梯)", desc: "由金木水火土五座大理石山組成。搭乘景觀電梯登上最宏偉的「水山」。探索天然溶洞（如藏龍洞）、莊嚴佛龕與百年寺廟。登頂望江台可遠眺大海與其餘四座奇石山峰，感受信仰與自然的交織。", map: "https://www.google.com/maps/search/?api=1&query=Marble+Mountains" },
+                    { name: "粉紅大教堂 + APEC 雕塑公園", desc: "【粉紅大教堂】法屬時期浪漫建築，夢幻糖果色外牆極具特色。【APEC 公園】位於韓江畔，核心建築造型如巨大的白色『飛箏』展翅高飛，象徵經濟騰飛與現代都會美學。", map: "https://www.google.com/maps/search/?api=1&query=APEC+Sculpture+Park+Da+Nang" },
+                    { name: "龍橋地標 & 龍首魚身雕像", desc: "峴港精神指標龍橋橫跨韓江。橋頭矗立著噴水的『龍首魚身』石雕，週末夜晚更有震撼的噴火演出，體驗港都最真切的生命頻率。", map: "https://www.google.com/maps/search/?api=1&query=Dragon+Bridge" }
                 ],
                 hotel: "EDEN OCEAN VIEW DA NANG",
                 hotelMap: "https://www.google.com/maps/search/?api=1&query=Eden+Ocean+View+Danang",
@@ -438,11 +344,11 @@
             },
             4: {
                 title: "雲端仙境：佛手之巔漫遊",
-                story: "搭乘全球最長的單軌纜車直抵雲霄，走在巨手托起的金橋之上，如入仙境。巴拿山的歐風城堡讓人彷彿置身十九世紀法國，享受一整天驚喜交織的異國派對。",
+                story: "搭乘全球最長單軌纜車直抵雲霄。巴拿山的歐風城堡讓人彷彿置身十九世紀法國，享受一整天驚喜交織的異國派對。",
                 spots: [
-                    { name: "巴拿山纜車 ➔ 佛手黃金橋 (Ba Na)", desc: "搭乘跨越三項世界紀錄的單軌纜車登上海拔1487米的高山。漫步由巨型佛手托起的『黃金橋』，穿梭雲霧之間，是俯瞰山嵐與雲海的神聖觀景台。", map: "https://www.google.com/maps/search/?api=1&query=Golden+Bridge+Ba+Na+Hills" },
-                    { name: "Ba Na Hills 法國山城 (French Village)", desc: "重現 19 世紀法式殖民風格。鵝卵石街道、尖塔古堡、歌德式教堂。隨處皆是絕美取景點。註：本行程不含蠟像館及百年酒窖門票。", map: "https://www.google.com/maps/search/?api=1&query=French+Village+Ba+Na+Hills" },
-                    { name: "Fantasy Park 奇幻樂園", desc: "越南最大室內樂園。內部設有各類冒險設施，包含受歡迎的戶外軌道滑車、恐龍樂園、4D電影院等。不論晴雨都能盡情暢玩，完全釋放身心壓力。", map: "https://www.google.com/maps/search/?api=1&query=Fantasy+Park" }
+                    { name: "巴拿山纜車 ➔ 佛手黃金橋 (Golden Bridge)", desc: "跨越三項世界紀錄之單軌纜車。走在巨型佛手托起的金色橋樑上，穿梭雲霧之間，視覺震撼舉世無雙，是俯瞰山嵐與雲海的神聖觀景台。", map: "https://www.google.com/maps/search/?api=1&query=Golden+Bridge+Ba+Na+Hills" },
+                    { name: "Ba Na Hills 法國山城 (French Village)", desc: "重現法式殖民風格。鵝卵石街道、尖塔古堡、歌德式教堂與花園。隨處皆是絕美取景點。註：不含蠟像館及百年酒窖門票。", map: "https://www.google.com/maps/search/?api=1&query=French+Village+Ba+Na+Hills" },
+                    { name: "Fantasy Park 奇幻樂園", desc: "越南最大室內樂園。內部設有各類冒險設施，包含戶外軌道滑車、恐龍樂園、4D電影院等。不論晴雨都能盡情暢玩，釋放壓力。", map: "https://www.google.com/maps/search/?api=1&query=Fantasy+Park" }
                 ],
                 hotel: "EDEN OCEAN VIEW DA NANG",
                 hotelMap: "https://www.google.com/maps/search/?api=1&query=Eden+Ocean+View+Danang",
@@ -451,15 +357,15 @@
             },
             5: {
                 title: "市集溫度：最後的回眸",
-                story: "最後一個清晨，走進韓江市集帶走腰果與咖啡的香氣。帶著滿載回憶的行囊登機。旅程雖然結束，但越南中部的溫暖與色彩，深深烙印在心底。",
+                story: "走進韓江市集帶走腰果與咖啡。整理五天的點點滴滴，我們登機離境，將越南中部的溫暖色彩深深印入心底。",
                 spots: [
-                    { name: "韓江市集 (Han Market)", desc: "峴港最大的民生集散地。高品質帶殼腰果、滴漏咖啡器材、手工編織袋應有盡有。穿梭在香料氣息與熱鬧吆喝聲的攤位間，捕捉峴港最鮮活的庶民生活溫度。", map: "https://www.google.com/maps/search/?api=1&query=Han+Market" },
-                    { name: "峴港機場 ➔ 桃園機場 (BR384)", desc: "回程 BR384 起飛時間為 12:55。提早抵達機場辦理登機手續，帶著這五天的珍貴敘事返台，回歸溫暖的家。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" }
+                    { name: "韓江市集 (Han Market)", desc: "峴港最大民生集散地。高品質帶殼腰果、滴漏咖啡器材應有盡有。穿梭在熱鬧吆喝聲攤位間，捕捉最鮮活的庶民生活溫度。", map: "https://www.google.com/maps/search/?api=1&query=Han+Market" },
+                    { name: "峴港機場 ➔ 桃園機場 (BR384)", desc: "回程起飛時間為 12:55。提早抵達現代化機場辦理登機。結束美好的文化探索旅程。", map: "https://www.google.com/maps/search/?api=1&query=Da+Nang+Airport" }
                 ],
                 hotel: "【溫暖的家】Taiwan",
                 hotelMap: "#",
                 facilities: "N/A",
-                meal: { b: "飯店自助早餐", l: "機上輕食", d: "回歸溫暖的家" }
+                meal: { b: "飯店自助早餐", l: "機上輕食", d: "溫暖的家" }
             }
         };
 
@@ -471,34 +377,33 @@
             if (!content) return;
             content.style.opacity = 0;
             setTimeout(() => {
-                content.innerHTML = `<div class="flex flex-col lg:flex-row gap-16"><div class="flex-1 text-left"><h3 class="text-4xl font-black mb-8 serif title-medium leading-tight italic border-b-4 border-wine-red inline-block pb-2">${d.title}</h3><p class="text-xl text-text-muted font-light mb-16 text-justify leading-relaxed">${d.story}</p><div class="space-y-16">${d.spots.map(s => `<div class="relative pl-12 border-l border-muted-brown"><div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-wine-red shadow-lg"></div><h4 class="font-black text-2xl mb-3 title-large">${s.name}</h4><p class="text-text-muted text-lg mb-4 leading-relaxed">${s.desc}</p><a href="${s.map || '#'}" target="_blank" class="map-link">EXPLORE ON GOOGLE MAP ➔</a></div>`).join('')}</div></div><div class="w-full lg:w-[420px] space-y-12 text-left"><div class="p-10 border border-muted-brown/30 bg-white shadow-sm rounded-2xl"><h4 class="title-small mb-6 uppercase italic border-b pb-2">Accommodation</h4><p class="hotel-text-small mb-4 uppercase tracking-tighter">${d.hotel}</p><div class="mb-6">${d.facilities.split(' ').map(f => f !== 'N/A' ? `<span class="facility-tag">${f}</span>` : '').join('')}</div>${d.hotelMap !== '#' ? `<a href="${d.hotelMap}" target="_blank" class="map-link">VIEW HOTEL LOCATION ➔</a>` : ''}</div><div class="p-10 border border-muted-brown/30 bg-white shadow-sm rounded-2xl"><h4 class="title-small mb-6 uppercase italic border-b pb-2">Daily Culinary</h4><div class="meal-line"><span class="meal-tag">早｜</span><span class="text-text-muted font-bold">${d.meal.b}</span></div><div class="meal-line"><span class="meal-tag">午｜</span><span class="text-text-muted font-bold">${d.meal.l}</span></div><div class="meal-line"><span class="meal-tag">晚｜</span><span class="text-text-muted font-bold">${d.meal.d}</span></div></div></div></div>`;
+                content.innerHTML = `<div class="flex flex-col lg:flex-row gap-16"><div class="flex-1 text-left"><h3 class="text-4xl font-black mb-8 serif title-medium leading-tight italic border-b-4 border-wine-red inline-block pb-2">${d.title}</h3><p class="text-xl text-text-muted font-light mb-16 text-justify leading-relaxed">${d.story}</p><div class="space-y-16">${d.spots.map(s => `<div class="relative pl-12 border-l border-muted-brown"><div class="absolute -left-[5px] top-0 w-2.5 h-2.5 bg-wine-red shadow-lg"></div><h4 class="font-black text-2xl mb-3 title-large">${s.name}</h4><p class="text-text-muted text-lg mb-4 leading-relaxed">${s.desc}</p><a href="${s.map || '#'}" target="_blank" class="map-link">EXPLORE VIA GOOGLE MAP ➔</a></div>`).join('')}</div></div><div class="w-full lg:w-[420px] space-y-12 text-left"><div class="p-10 border border-muted-brown/30 bg-white shadow-sm rounded-2xl"><h4 class="title-small mb-6 uppercase italic border-b pb-2">Accommodation</h4><p class="hotel-text-small mb-4 uppercase tracking-tighter">${d.hotel}</p><div class="mb-6">${d.facilities.split(' ').map(f => f !== 'N/A' ? `<span class="facility-tag">${f}</span>` : '').join('')}</div>${d.hotelMap !== '#' ? `<a href="${d.hotelMap}" target="_blank" class="map-link">VIEW HOTEL LOCATION ➔</a>` : ''}</div><div class="p-10 border border-muted-brown/30 bg-white shadow-sm rounded-2xl"><h4 class="title-small mb-6 uppercase italic border-b pb-2">Daily Culinary</h4><div class="meal-line"><span class="meal-tag">早｜</span><span class="text-text-muted font-bold">${d.meal.b}</span></div><div class="meal-line"><span class="meal-tag">午｜</span><span class="text-text-muted font-bold">${d.meal.l}</span></div><div class="meal-line"><span class="meal-tag">晚｜</span><span class="text-text-muted font-bold">${d.meal.d}</span></div></div></div></div>`;
                 content.style.opacity = 1;
             }, 200);
         };
         showDay(1);
 
-        // --- 3. Firestore 支出系統 (容錯處理) ---
+        // --- 支出儲存系統 (Firebase/LocalStorage 雙棲) ---
+        let internalExpenses = []; 
+
         async function initStorage() {
-            if (!auth || !db) {
-                console.info("Cloud storage disabled in this environment.");
+            if (isExternalEnv) {
+                internalExpenses = JSON.parse(localStorage.getItem('vietnam_expenses') || '[]');
+                renderExpenses(internalExpenses);
                 return;
             }
             const initAuth = async () => {
-                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
-                    await signInWithCustomToken(auth, window.__initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) { await signInWithCustomToken(auth, window.__initial_auth_token); } 
+                else { await signInAnonymously(auth); }
             };
             await initAuth();
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     currentUser = user;
-                    const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'));
-                    onSnapshot(q, (snapshot) => {
-                        const expenses = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                        renderExpenses(expenses);
-                    }, (err) => console.error("Firestore error:", err));
+                    onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'expenses')), (snap) => {
+                        internalExpenses = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        renderExpenses(internalExpenses);
+                    });
                 }
             });
         }
@@ -510,47 +415,38 @@
             const cat = document.getElementById('exp-cat').value;
             if (!item || isNaN(amount)) return;
 
-            if (!currentUser || !db) {
-                // 回退到內存顯示 (GitHub環境)
-                const tempExpenses = [{ id: Date.now().toString(), item, amount, cur, cat }];
-                renderExpenses(tempExpenses, true);
-                return;
+            if (isExternalEnv) {
+                internalExpenses.push({ id: Date.now().toString(), item, amount, cur, cat });
+                localStorage.setItem('vietnam_expenses', JSON.stringify(internalExpenses));
+                renderExpenses(internalExpenses);
+            } else if (currentUser) {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), { item, amount, cur, cat, timestamp: Date.now() });
             }
-
-            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), { item, amount, cur, cat, timestamp: Date.now() });
-            document.getElementById('exp-item').value = '';
-            document.getElementById('exp-amount').value = '';
+            document.getElementById('exp-item').value = ''; document.getElementById('exp-amount').value = '';
         }
-        const addBtn = document.getElementById('add-btn');
-        if (addBtn) addBtn.onclick = addExpense;
+        document.getElementById('add-btn').onclick = addExpense;
 
-        window.deleteExpense = async (id) => { 
-            if (!currentUser || !db) return;
-            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id)); 
+        window.deleteExpense = async (id) => {
+            if (isExternalEnv) {
+                internalExpenses = internalExpenses.filter(e => e.id !== id);
+                localStorage.setItem('vietnam_expenses', JSON.stringify(internalExpenses));
+                renderExpenses(internalExpenses);
+            } else if (currentUser) {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'expenses', id));
+            }
         };
 
-        let localExpenses = []; // 用於無雲端環境的本地緩存
-        function renderExpenses(list, isLocal = false) {
-            const tbody = document.getElementById('expense-list');
-            if (!tbody) return;
-            
-            if (isLocal) localExpenses = [...localExpenses, ...list];
-            const displayList = isLocal ? localExpenses : list;
-
+        function renderExpenses(list) {
+            const tbody = document.getElementById('expense-list'); if (!tbody) return;
             let totalTWD = 0;
-            tbody.innerHTML = displayList.map(e => {
+            tbody.innerHTML = list.map(e => {
                 let twdValue = e.cur === 'VND' ? e.amount / exchangeRateVND : e.amount * (TWD_RATES[e.cur] || 1);
                 totalTWD += twdValue;
                 return `<tr class="group hover:bg-gray-50 border-b border-gray-100 transition-colors"><td class="py-8 px-4 font-black">${e.item}</td><td class="py-8 px-4 title-small text-sm font-black uppercase tracking-widest italic">${e.cat}</td><td class="py-8 px-4 text-right text-gray-400 font-mono tracking-tighter">${e.amount.toLocaleString()} ${e.cur}</td><td class="py-8 px-4 text-right font-black text-wine-red tracking-tight">NT$ ${Math.round(twdValue).toLocaleString()}</td><td class="py-8 px-4 text-right"><button onclick="deleteExpense('${e.id}')" class="text-red-300 hover:text-red-700 transition-all font-bold">✕</button></td></tr>`;
             }).join('');
-            
-            const totalTwdEl = document.getElementById('total-twd');
-            const totalUsdEl = document.getElementById('total-usd');
-            const totalVndEl = document.getElementById('total-vnd');
-            
-            if (totalTwdEl) totalTwdEl.textContent = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
-            if (totalUsdEl) totalUsdEl.textContent = `$ ${(totalTWD / TWD_RATES.USD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            if (totalVndEl) totalVndEl.textContent = `${Math.round(totalTWD * exchangeRateVND).toLocaleString()} ₫`;
+            document.getElementById('total-twd').textContent = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
+            document.getElementById('total-usd').textContent = `$ ${(totalTWD / TWD_RATES.USD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            document.getElementById('total-vnd').textContent = `${Math.round(totalTWD * exchangeRateVND).toLocaleString()} ₫`;
         }
         initStorage();
     </script>
